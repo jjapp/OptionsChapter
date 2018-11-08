@@ -1,0 +1,23 @@
+\begin{thebibliography}{1}
+
+\bibitem{blackscholes73}
+Fischer Black and Myron Scholes.
+\newblock The pricing of options and corporate liabilities.
+\newblock {\em The Journal of Political Economy}, 81(3):637--654, 1973.
+
+\bibitem{fama65}
+Eugene~F Fama.
+\newblock The behavior of stock-market prices.
+\newblock {\em The Journal of Business}, 38(1):34--105, 1965.
+
+\bibitem{fama69}
+Eugene~F Fama.
+\newblock Efficient capital markets: A review of theory and empirical work.
+\newblock {\em The Journal of Finance}, 25(2):383--417, 1969.
+
+\bibitem{samuelson65}
+Paul~A Samuelson.
+\newblock Proof that properly anticipated prices fluctuate randomly.
+\newblock {\em Industrial Management Review}, 6(2):41--49, 1965.
+
+\end{thebibliography}

@@ -1,0 +1,96 @@
+\documentclass{article}
+\setlength{\parskip}{\baselineskip}%
+\usepackage{amsmath, enumitem, textcomp}
+\usepackage[square,sort,comma,numbers]{natbib}
+
+\begin{document}
+
+\title{Option Pricing with Known Volatility Shocks}
+\author{John Appert}
+\maketitle
+
+
+\section{Standard Black Scholes Options Pricing}
+
+The purpose of this section is to show the characteristics of European Style options under the standard BS options valuation formula.  In the next section I change one key assumption in the valuation formula and explore the impact of that change.
+
+The value of a call option is given by:
+
+\begin{equation}C_{t}=S_{t}N(d_{1})-Xe^{-rt}N(d_{2})
+\end{equation}
+
+Where:
+
+\begin{equation}
+d_{1}=\frac{ln(\frac{S_{t}}{X}+(r +\frac{1}{2}\sigma^{2})(t)}{\sigma\sqrt{t}}
+\end{equation}
+
+And:
+\begin{equation}
+d_{2}=d_{1}-\sigma\sqrt{t}
+\end{equation}
+$S_{t}$ is the stock price.\\
+$X$ is the strike price of the option.\\
+$N(d)$ is the cumulative normal density function.\\
+$\sigma$ is the volatility of the underlying stock.
+
+\subsection{Total Derivative of the Call Option Price}
+
+The value of the call option is dependent on time to expiration, changes in volatility, changes in the price of the underlying stock and changes in the risk free interest rate.  Understanding these dynamics can be aided by looking at the total differential of the call option price.\\
+\\
+The sensitivity of the option price to changes in the price of the underlying is given by:
+
+$
+\frac{\partial{C_{t}}}{\partial{S_{t}}}=N(d_{1})+S_{t}\frac{\partial{N(d_{1})}}{\partial{S_{t}}}-Xe^{-rt}\frac{\partial{N(d_{2})}}{\partial{S_{t}}}
+$
+
+This simplifies to:
+
+\begin{equation}
+\Delta=\frac{\partial{C_{t}}}{\partial{S_{t}}}=N(d_{1})
+\end{equation}
+
+
+The sensitivity of the call option price to time is given by:
+
+$\frac{\partial{C_{t}}}{\partial{t}}=S_{t}N'(d_{1})\frac{\partial{d_{1}}}{\partial{t}}+rXe^{-rt}N(d_{2})-Xe^{-rt}N'(d_{2})\frac{\partial{d_{2}}}{\partial{t}}$
+
+This simplifies to:
+\begin{equation}
+\Theta=\frac{\partial{C_{t}}}{\partial{t}}=rXe^{-rt}N(d_{2})+Xe^{-rt}N'(d_{2})\frac{\sigma}{2\sqrt{t}}
+\end{equation}
+
+The sensitivity of the call option price to volatility is given by:
+
+$\frac{\partial{C_{t}}}{\partial{\sigma}}=S_{t}N'(d_{1})\frac{\partial{d_{1}}}{\partial{\sigma}}-Xe^{-rt}N'(d_{2})\frac{\partial{d_{2})}}{\partial{\sigma}}$
+
+This simplifies to:
+
+\begin{equation}
+\kappa=\frac{\partial{C_{t}}}{\partial{\sigma}}=S_{t}N'(d_{1})\sqrt{t}
+\end{equation}
+
+We assume that interest is constant over the time period. Therefore the total derivative of the call option is given by:
+
+$\partial{C}=\Delta\partial{S_{t}}-\Theta\partial{t}+\kappa\partial{\sigma}$
+
+If the expectation of returns for volatility is zero than in equilibrium the expected return in the option due to $\Delta$ will equal the price decay due to $\Theta$.
+
+\section{Known Volatility Shocks}
+
+Imagine that at some time in the future there is a known event that will result in a short term volatility shock.  This event could be an earnings call or in the case of futures options a release of crop data.  If the volatility due to that event is greater than the current volatility the price of the option will increase ($\kappa$ is positive).  In this case the volatility component of the option price will include a random element reflecting the expected volatility of the underlying price and a component that will increase as the event nears.  
+
+
+$\sigma=\sigma(t)$, 
+$\sigma{'}>0$,
+$\sigma{''}>0$
+
+If we assume a constant risk free rate again then the total derivative of the option is now:
+
+$\Delta=N(d_{1})$\\
+$\Theta=Xe^{-rt}[rN(d_{2})+N'(d_{2})(\frac{\sigma}{2\sqrt{t}}+\sigma{'}\sqrt{t})]$\\
+$\kappa=\frac{SN'(d_1)\sqrt{\tau}}{\sigma'}$
+\begin{equation}
+\partial{C}=N(d_{1})\partial{S}-Xe^{-rt}[rN(d_{2})+N'(d_{2})(\frac{\sigma}{2\sqrt{t}}+\sigma{'}\sqrt{t})]\partial{t}+\frac{SN'(d_1)\sqrt{\tau}}{\sigma'}\partial{\sigma}
+\end{equation}
+\end{document}

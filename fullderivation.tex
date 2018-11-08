@@ -1,0 +1,122 @@
+
+\documentclass{article}
+\setlength{\parskip}{\baselineskip}%
+\usepackage{amsmath, enumitem, textcomp}
+\usepackage[square,sort,comma,numbers]{natbib}
+
+\begin{document}
+
+\begin{titlepage} 
+\title{Options Pricing with Known Volatility Events}
+\author{John Appert}
+\maketitle
+
+\begin{abstract}
+TODO
+\end{abstract}
+
+\end{titlepage}
+
+\section{Introduction}
+
+An option is a contract giving the right to buy or sell a an asset within a certain time period.  A call option gives the holder the right to buy an asset at a certain price within some time period.  A put option gives the holder the right to sell an asset at a certain price within some time period.  
+
+Standard options contracts on equities give the holder the right to buy or sell 100 shares of the underlying stock.  Options contracts on other assets, such as futures, have standard multipliers related to the size of the standard futures contract.  For example, a standard crude light oil contract trading on the Chicago Mercantile Exchange controls 1000 barrels of oil.  An options contract on crude light also controls 1000 barrels of oil.
+
+When exercising an option the price paid is known as the "exercise price" or the "strike price".  The last day that an option may be exercised is the "expiration date".  Settlement prices on the expiration date vary by contract type.  
+
+The standard assumption underlying the pricing of options is the "fair game" assumption.  This assumption states that if the option is priced correctly a trader should not be able to make profits certain profits through any combination of long or short options and long or short shares of the underlying stock.  This has been a standard assumption dating back to Bachelior in 1900 and used by Samuelson, Fama, and Black and Scholes.  \cite{blackscholes73}\cite{samuelson65}\cite{fama65}.
+
+In the standard options pricing model derived by Black and Schole there are five variables that determine the price of an option.  These are the price of the underlying asset, the strike price of the contract, the time left until the expiration of the contract, the risk free interest rate and the implied volatility.  The price of the underlying, the strike price, the risk free interest rate and the time left to expiration are all exogenous variables and can be inputed into the options pricing model.  Volatility is defined as the variance in log returns of the asset and is unknown.  Estimates can be made based on historical volatility however, in practice, the volatility is often calculated based on the market price of the option.  In this context the volatility is a market forecast of future volatility and is called "implied volatility".  
+
+When the time until expiration is very far in the future the price of the option will be higher.  As time until expiration increases the price of the option should converge to the price of the underlying asset.
+
+The higher the price of the underlying asset the higher price the option should trade at.  As the price of the asset exceeds the strike price of the option the price of the option should increase and eventually converge to the price of the underlying stock.  As the price of the underlying asset drops below the strike price the value of the option should drop until it becomes very close to zero.  
+
+As the implied volatility increases the likelihood that the option will expire "in the money" increases and the value of the option should increase.  As the implied volatility of the option decreases the liklihood the option will expire in the money decreases and the price of the option should decrease.\cite{blackscholes73}
+
+Generally volatility of the underlying asset's returns can be modeled as static or using improved volatility forecasting models like GARCH.  However, there are situations where a known event will release new information into the market.  The efficient market hypothesis shows that these events will result in almost instantaneous moves to a new price level as the information is digested by the market.  \cite{fama65}\cite{fama69}  In this case there will be a discrete event that will lead to a realized volatility in the asset's returns that is greater than the current levels.  Additionally, this event is known to market participants and should be discounted to the current value of an option on the asset.  
+ 
+In section two of this paper I review the assumptions underlying the original Black Scholes paper on options pricing and then derive the options pricing formula using CAPM. I then find full derivative of the formula and examine the sources of return in an options contract over a time period.  
+
+In section three of this paper I discuss the impact of a known event that will result in higher volatility than the current volatility.  Examples of these events could be earnings announcements, key industry reports release dates or some other exogenous event.  I examine how these events should impact the price of an option graphically and then re-derive the full derivative under these new conditions.  
+
+\section{Black Scholes Pricing Model}
+
+In this section I review the derivation of an options pricing formula using the Black Scholes model and the Capital Asset Pricing Model as outlined in their 1973 paper, The Pricing of Options and Corporate Liabilities.
+
+There are seven assumptions underlying the Black Scholes Opetions Pricing Model \cite{blackscholes73}:
+
+\begin{enumerate}
+
+\item The short-term interest rate is known and constant through time.
+\item The stock price follows a random walk in continuous time with a variance rate proportional to the square of the stock price.  The variance rate of the return on the stock is constant.
+\item  The stock pays no dividends or distributions.
+\item The option is "European" style and can only be exercised at expiration.
+\item All transaction costs from buying or selling the option or underlying asset are zero.
+\item  It is possible to borrow any fraction of the price of a security to buy it or hold it at the short-term interest rate.
+\item  There are no penalities to short selling.
+
+\end{enumerate}
+
+If these assumptions are correct than the value of the option relies only on the price of the stock, the time to expiration, and on the variables that are assumed to be constant.  Therefore a hedged position consisting of a long position in the underlying asset and a short position in the option can be created that does not rely on the price of the stock but only time until expiration and the values assumed to be constant.  Let $\omega(x,t)$ be the value of the option as a function of the stock price x and time t.  The number of options that must be sold short against one share of stock is:
+
+\begin{equation}
+\frac{1}{\omega_{x}(x,t)}
+\end{equation}
+
+It is important to note that this will only hold for small changes in the price x of the underlying stock due to the fact that the returns to the option are more volatile than the returns to the stock.  Therefore the position consisting of long stock and short options must be hedged continuously to maintain a neutral postion.  Additionally, as shown by Black Scholes a constantly hedged position will have zero risk.
+
+Since the hedged position contains one long share of stock and $\frac{1}{\omega_{x}}$ the value of the position is given by:
+
+\begin{equation}
+V=x-\frac{\omega}{\omega_{x}}
+\end{equation}
+
+The change in the value of the position over time is therefor:
+
+\begin{equation}
+\Delta{V}=\Delta{x}-\frac{\Delta{\omega}}{\omega_{x}}
+\end{equation}
+
+If we assume that the time between adjustments is small we can model the change in $\omega$ as a Weiner process.  Start with the fact that $\Delta{\omega}$ is $\omega(x + \Delta{x}, t + \Delta(t)) - \omega(x,t)$.  We can expand this using a Taylor series approximation to:
+
+\begin{equation}
+\Delta{\omega}=\omega_{x}\Delta{x} + \frac{1}{2}\omega_{xx}\nu^{2}x^{2}\Delta{t} + \omega_{t}\Delta{t}
+\end{equation}
+
+where $\nu$ is the variance rate of return on the stock.
+
+Substituting equation 4 into equation 3 we get:
+
+\begin{equation}
+\Delta{V}=-(\frac{1}{2}\omega_{xx}\nu^{2}x^{2}+\omega_{t})\frac{\Delta{t}}{\omega_{x}}
+\end{equation}
+
+The return on the hedged position is certain based on our assumptions.  This means that the return to holding this position must be the short-term rate times over the time held.  If this weren't true speculators could buy or sell the position in large quantities forcing the price to the level that would return the short-term rate.  This means that $\Delta{V} = (x-\frac{\omega}{\omega_{x}})r\Delta{t}$.  Substituting this result into equation 5 we get:
+
+\begin{equation}
+-(\frac{1}{2}\omega_{xx}\nu^{2}x^{2}+\omega_{t})\frac{\Delta{t}}{\omega_{X}}=(x-\frac{\omega}{\omega_{x}})r\Delta{t}
+\end{equation}
+
+Re-arranging 6 gives us a differential equation for the value of a call option:
+
+\begin{equation}
+\omega_{t}=r\omega-rx\omega_{x}-\frac{1}{2}\nu^{2}x^{2}\omega_{xx}
+\end{equation}
+
+If we let the maturity date for the option be $t^{*}$ we can write the following boundary condition:
+
+\begin{equation}
+\omega(x, t^{*})=\left\{\begin{tabular}{cc}
+{x-c}, &  x$\geq${c}\\
+0, & x\textless{c}
+\end{tabular}
+\right\}
+\end{equation}
+
+
+\bibliographystyle{plain}
+\bibliography{optionspricing} 
+% Note the lack of whitespace between the commas and the next bib file.
+\end{document}
